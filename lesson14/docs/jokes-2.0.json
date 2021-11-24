@@ -1,0 +1,332 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Jokes API",
+    "description": "This is a simple Jokes API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "jokes"
+    },
+    {
+      "name": "users"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "adds a user",
+        "operationId": "addUser",
+        "description": "Adds a user to the system",
+        "tags": [
+          "users"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User to add",
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user created",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/api/jokes": {
+      "get": {
+        "summary": "get jokes",
+        "operationId": "getJokes",
+        "description": "By passing in the appropriate options, you can search for available jokes",
+        "tags": [
+          "jokes"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": false,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "query",
+            "name": "searchString",
+            "description": "pass an optional search string for looking up jokes with that text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "number of records to skip for pagination",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "maximum number of records to return",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Joke"
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "summary": "adds a joke",
+        "operationId": "addJoke",
+        "description": "Adds a joke to the system1",
+        "tags": [
+          "jokes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "joke",
+            "description": "Joke to add",
+            "schema": {
+              "$ref": "#/definitions/NewJoke"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Joke created"
+          },
+          "400": {
+            "description": "Invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/jokes/{jokeId}": {
+      "get": {
+        "summary": "Get a joke given its id",
+        "description": "Get a joke given its id",
+        "operationId": "getJokeById",
+        "tags": [
+          "jokes"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "jokeId",
+            "in": "path",
+            "description": "ID of joke that to be fetched",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Joke"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Joke not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a joke by ID",
+        "description": "Delete a joke by ID",
+        "operationId": "deleteJoke",
+        "tags": [
+          "jokes"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "jokeId",
+            "in": "path",
+            "description": "ID of the joke to be deleted",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Joke not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "updates a joke",
+        "operationId": "updateJoke",
+        "description": "Updates a Joke in the system",
+        "tags": [
+          "jokes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "jokeId",
+            "in": "path",
+            "description": "ID of the joke to be deleted",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "joke",
+            "description": "Joke to add",
+            "schema": {
+              "$ref": "#/definitions/Joke"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "joke updated"
+          },
+          "404": {
+            "description": "Joke not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Joke": {
+      "type": "object",
+      "required": [
+        "id",
+        "text",
+        "userId"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "text": {
+          "type": "string",
+          "example": "study PI"
+        },
+        "userId": {
+          "type": "integer"
+        }
+      }
+    },
+    "NewJoke": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "example": "study PI"
+        }
+      }
+    },
+    "NewUser": {
+      "type": "object",
+      "required": [
+        "userName"
+      ],
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "joao"
+        }
+      }
+    }
+  }
+}
