@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js",
     "start-dev": "nodemon server.js"
   },
@@ -16,5 +16,8 @@
     "jest-openapi": "^0.14.1",
     "swagger-ui-express": "^4.1.6",
     "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.0"
   }
 }

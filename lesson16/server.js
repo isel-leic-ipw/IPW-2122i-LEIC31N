@@ -10,7 +10,12 @@ const swaggerDocument = YAML.load('./docs/jokes-api.yaml');
 
 const app = express()
 const PORT = 1904
-const jokesApi = require('./jokes-api')
+
+const jokesData = require('./jokes-data_mem')
+const jokesServices = require('./jokes-services')(jokesData)
+const jokesApi = require('./jokes-api')(jokesServices)
+
+
 app.use(express.json())
 
 app.use('/api-docs', swaggerUi.serve);
