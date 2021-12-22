@@ -3,13 +3,15 @@ const errors = require('./errors')
 
 const USERS = [{ userId: '0b115b6e-8fcd-4b66-ac26-33392dcb9340', userName: 'User1'}, {userId: '3dfd8596-cfd3-431d-8e36-f0fc4c64f364', userName: 'user2'}]
 
+
+const SIZE_JOKES = 5
  
 
-const jokes = new Array(100).fill(undefined, 0, 5)
+const jokes = new Array(SIZE_JOKES).fill(undefined, 0, SIZE_JOKES)
             .map((_, idx) => { return  {id: idx+1, text: `joke${idx+1}`, userId: USERS[(idx%2)].userId} })
 
 
-let nextId = 3
+let nextId = jokes.length
 
 module.exports = {
     getJokes : getJokes,

@@ -19,6 +19,7 @@ const jokesSite = require('./jokes-web-site')(jokesServices)
 
 
 app.use(express.json())
+app.use(express.urlencoded())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -14,6 +14,9 @@ module.exports = function(jokesServices) {
     // HAMMER TIME: Middleware to insert an hardcoded user
     router.use(insertHammerUser) 
     router.get('/jokes', getJokes) 
+    router.get('/jokes/new', newJoke) 
+    router.post('/jokes', createJoke) 
+    router.get('/jokes/:id', getJoke) 
 
     
     return router
@@ -24,16 +27,30 @@ module.exports = function(jokesServices) {
         next()
     }
 
-    async function getJokes(req, rsp){
-        // jokesServices.getJokes()
-        //     .then(jokes => rsp.json(jokes))
-        //     .catch( e => rsp.status(500).json({description: "Internal error occurred"}))
-    
+    async function getJokes(req, res){
         let userId = req.user
         let jokes = await jokesServices.getJokes(userId)
         
         console.log(jokes)
-        rsp.render('jokes', { title: 'All jokes', jokes: jokes.map((j, idx) =>  { return{ joke: j, beginRow: idx%2 == 0, endRow: idx%2 == 1 || idx == jokes.length-1}} )} )
+        res.render('jokes', { title: 'All jokes', jokes: jokes.map((j, idx) =>  { return{ joke: j, beginRow: idx%2 == 0, endRow: idx%2 == 1 || idx == jokes.length-1}} )} )
+    }
+
+    async function getJoke(req, res){
+        let joke = await jokesServices.getJoke(req.params.id)
+        res.render('joke', joke)
+
+    }
+
+    async function newJoke(req, res){
+        res.render('newJoke')
+           
+    }
+
+    async function createJoke(req, res){
+        console.log(req.body)
+        let newJoke = await jokesServices.createJoke(req.body.text)
+        res.redirect(`/jokes/${newJoke.id}`)
+           
     }
     
 

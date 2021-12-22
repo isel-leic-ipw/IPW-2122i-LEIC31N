@@ -17,7 +17,7 @@ module.exports = function (jokesData) {
         if(userId.constructor != String)
             return Promise.reject("Invalid user Id")
         return jokesData.getJokes(searchText,skip, limit)
-                .then(jokes => jokes.filter(j => j.userId == userId))
+                //.then(jokes => jokes.filter(j => j.userId == userId))
     }
     
     async function getJoke(id){
