@@ -9,7 +9,8 @@ module.exports = function (jokesData) {
         getJoke : getJoke,
         updateJoke : updateJoke,
         createJoke : createJoke,
-        deleteJoke : deleteJoke
+        deleteJoke : deleteJoke,
+        validateCredentials : validateCredentials
     }
 
 
@@ -17,7 +18,7 @@ module.exports = function (jokesData) {
         if(userId.constructor != String)
             return Promise.reject("Invalid user Id")
         return jokesData.getJokes(searchText,skip, limit)
-                //.then(jokes => jokes.filter(j => j.userId == userId))
+                .then(jokes => jokes.filter(j => j.userId == userId))
     }
     
     async function getJoke(id){
@@ -37,6 +38,23 @@ module.exports = function (jokesData) {
     async function deleteJoke(id){ 
         console.log("deleteJoke")
     }
-    
+
+    async function validateCredentials(username, password){
+        if(!username || !password) {
+            throw errors.INVALID_CREDENTIALS
+        } 
+
+        return jokesData.getUserByUsername(username)
+            .then(verifyPassword)
+
+        function verifyPassword(user) {
+            if(user.password == password)
+                return {
+                    userId: user.userId,
+                    userName: user.userName
+                }
+            throw  errors.INVALID_CREDENTIALS
+        }
+    } 
 }
 

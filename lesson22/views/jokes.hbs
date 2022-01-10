@@ -1,0 +1,24 @@
+
+
+<div class="container">
+    <h1>All jokes</h1>
+    <a type="button" href="/jokes/new" role="button" class="btn btn-primary btn-sm">Create New Joke</a>
+    {{#each jokes}}
+    {{#if beginRow}}
+        <div class="row">
+    {{/if}}
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">{{joke.text}}</h5>
+                    <p class="card-text">Joke description.</p>
+                    <a href="jokes/{{joke.id}}" class="btn btn-primary">{{joke.text}} details</a>
+                    </div>
+                </div>
+            </div>
+    {{#if endRow}}
+        </div>
+    {{/if}}
+{{/each}}
+</div>
+
