@@ -19,6 +19,9 @@ const PORT = 1904
 app.use(expressSession({secret: "Benfica campeão 2021/2022 ?"}))
 app.use(express.json())
 app.use(express.urlencoded())
+
+app.use('/public', express.static(path.join(__dirname, 'public')))
+
 app.use(cookieParser())
 
 
@@ -41,10 +44,9 @@ app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 
 
-app.use('/api', jokesApi)                        // Get all jokes
+app.use('/api/jokes', jokesApi)                        // Get all jokes
 app.use('/site/jokes', jokesSite)           
 app.use('/site/users', usersSite)           
-
 
 
 app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`))

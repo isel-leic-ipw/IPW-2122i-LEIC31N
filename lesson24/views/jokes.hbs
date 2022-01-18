@@ -1,18 +1,22 @@
 
 
+
+
 <div class="container">
+    <div id="status"></div>
     <h1 id="id1">All jokes</h1>
     <a id="id2" type="button" href="/jokes/new" role="button" class="btn btn-primary btn-sm">Create New Joke</a>
     {{#each jokes}}
     {{#if beginRow}}
         <div class="row">
     {{/if}}
-            <div class="col-6">
+            <div id="joke-{{joke.id}}" class="col-6">
                 <div class="card">
                     <div class="card-body">
-                    <h5 class="card-title">{{joke.text}}</h5>
+                    <h5 id="joke-name-{{joke.id}}" class="card-title">{{joke.text}}</h5>
                     <p class="card-text">Joke description.</p>
                     <a href="jokes/{{joke.id}}" class="btn btn-primary">{{joke.text}} details</a>
+                    <div id="delete-{{joke.id}}" class="delete btn btn-primary">Delete {{joke.text}}</div>
                     </div>
                 </div>
             </div>
@@ -21,4 +25,8 @@
     {{/if}}
 {{/each}}
 </div>
+
+<script language="JavaScript" src="/public/js/jokes.js">
+</script>
+
 

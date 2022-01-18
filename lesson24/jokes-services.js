@@ -36,7 +36,7 @@ module.exports = function (jokesData) {
     }
     
     async function deleteJoke(id){ 
-        console.log("deleteJoke")
+        return jokesData.deleteJoke(id)
     }
 
     async function validateCredentials(username, password){

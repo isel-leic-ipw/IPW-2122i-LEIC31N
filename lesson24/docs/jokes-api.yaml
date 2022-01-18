@@ -220,6 +220,9 @@ paths:
         schema:
           type: integer
       responses:
+        200: 
+          description: Joke deleted
+          content: { status: "joke with id 123 deleted" } 
         400:
           description: Invalid ID supplied
           content: {}

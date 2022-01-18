@@ -29,29 +29,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script language="JavaScript">
-      const id1 = document.querySelector('#id1')
-      id1.addEventListener('click', handleClick)
-
-      async function handleClick(e) {
-        const options = {
-          headers: {
-            Authorization: 'Bearer 0b115b6e-8fcd-4b66-ac26-33392dcb9340'
-          }
-        }
-        const rsp = await fetch('/api/jokes', options)
-        const jokes = await rsp.json()
-        console.log(jokes)
-        
-      }
-      
-
-      
-      
-
-    </script>
-
-
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
