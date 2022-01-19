@@ -14,7 +14,7 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./docs/jokes-api.yaml');
 
 const app = express()
-const PORT = 1904
+const PORT = process.env.PORT || 1904
 
 app.use(expressSession({secret: "Benfica campeão 2021/2022 ?"}))
 app.use(express.json())
