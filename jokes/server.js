@@ -11,7 +11,7 @@ const expressSession = require('express-session')
 
 // Using YAML openAPI file
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./docs/jokes-api.yaml');
+const swaggerDocument = YAML.load(path.join(__dirname, '/docs/jokes-api.yaml'))
 
 const app = express()
 const PORT = process.env.PORT || 1904
